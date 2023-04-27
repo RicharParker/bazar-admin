@@ -6,9 +6,9 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
-  User.findOne({ email }).then((usuario) => {
+  User.findOne({ username }).then((usuario) => {
     if (usuario) {
-      return res.json({ mensaje: "Ya existe un usuario con ese email" });
+      return res.json({ mensaje: "Ya existe un usuario con ese username" });
     } else if (!username || !email || !password) {
       return res.json({ mensaje: "Falta el username / email / contraseña" });
     } else {

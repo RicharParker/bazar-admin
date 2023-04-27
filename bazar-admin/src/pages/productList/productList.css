@@ -2,6 +2,12 @@
     flex: 4;
 }
 
+.userAddButton{
+    margin-bottom: 34px;
+    width: 102px;
+    font-size: 14px;
+}
+
 .productListItem{
     display: flex;
     align-items: center;
