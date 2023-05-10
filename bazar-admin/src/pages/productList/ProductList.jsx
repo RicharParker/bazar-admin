@@ -17,6 +17,8 @@ export default function ProductList() {
   useEffect(() => {
     getProducts(dispatch);
   }, [dispatch]);
+
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "¿Está seguro que desea eliminar el producto?",
@@ -25,7 +27,7 @@ export default function ProductList() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, elimínelo!",
+      confirmButtonText: "¡Sí, eliminar!",
       cancelButtonText: "Cancelar",
     });
   
@@ -39,7 +41,6 @@ export default function ProductList() {
             "El producto ha sido eliminado con éxito.",
             "success"
           ).then(() => {
-            console.log(product);
             history.push("/products");
           });
         } else {
@@ -50,7 +51,7 @@ export default function ProductList() {
           );
         }
       } else {
-        console.error("API response was undefined");
+        console.error("La respuesta no es válida");
       }
     }
   };
@@ -111,4 +112,4 @@ export default function ProductList() {
       />
     </div>
   );
-}
+} 

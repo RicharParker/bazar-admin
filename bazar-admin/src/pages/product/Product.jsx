@@ -21,6 +21,11 @@ export default function Product() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
+  const product = useSelector((state) =>
+    state.product.products.find((product) => product._id === productId)
+  );
+
   const toastContainerStyle = {
     fontSize: '1.5rem',
     backgroundColor: '#333',
@@ -29,35 +34,46 @@ export default function Product() {
     padding: '1rem',
   };
 
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
+  useEffect(() => {
+    setInputs({
+      title: product.title,
+      desc: product.desc,
+      price: product.price,
+      categories: product.categories.join(","),
+      inStock: product.inStock.toString(),
     });
+  }, [product]);
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
 
   const handleCat = (e) => {
     setCat(e.target.value.split(","));
   };
 
-  const handleUpdateClick = async (e, id) => {
+  const handleUpdateClick = async (e) => {
     e.preventDefault();
     const updatedProduct = { ...inputs, categories: cat };
-    const { success, product } = await updateProduct(id, updatedProduct, dispatch);
-    if (success) {
+    const res = await updateProduct(productId, updatedProduct, dispatch);
+    if (res.success) {
+      console.log("Imprimer esto", res.success);
       toast.success("Producto actualizado exitosamente");
       history.push("/products");
     } else {
       toast.error("No se pudo actualizar el producto");
     }
+    
   };
-  
-  
 
-  const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
-  );
 
-  const MONTHS = useMemo(
+  /*const MONTHS = useMemo(
     () => [
       "Jan",
       "Feb",
@@ -93,7 +109,7 @@ export default function Product() {
       }
     };
     getStats();
-  }, [productId, MONTHS]);
+  }, [productId, MONTHS]);*/
 
   return (
     <>
@@ -142,15 +158,15 @@ export default function Product() {
           <form className="productForm">
             <div className="productFormLeft">
               <label>Nombre del producto</label>
-              <input type="text" placeholder={product.title} onChange={handleChange}/>
+              <input type="text" placeholder={product.title} name="title" onChange={handleChange} />
               <label>Descripción</label>
-              <input type="text" placeholder={product.desc} onChange={handleChange} />
+              <input type="text" placeholder={product.desc} name="desc" onChange={handleChange} />
               <label>Precio</label>
-              <input type="text" placeholder={product.price}onChange={handleChange}  />
+              <input type="text" placeholder={product.price} name="price" onChange={handleChange} />
               <label>Categorias</label>
               <input type="text" placeholder={product.categories} onChange={handleCat} />
               <label>In Stock</label>
-              <select name="inStock" id="idStock" onChange={handleChange} >
+              <select name="inStock" onChange={handleChange} >
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
@@ -163,7 +179,10 @@ export default function Product() {
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="productButton"  onClick={(e) => handleUpdateClick(e, productId)} >Actualizar</button>
+              <button className="productButton" onClick={(e) => {
+                handleUpdateClick(e, productId);
+              }}>Actualizar</button>
+
             </div>
           </form>
         </div>

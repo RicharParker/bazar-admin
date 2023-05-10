@@ -16,7 +16,8 @@ import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 import NotFound from "./pages/NotFound/NotFound";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 
 const App = ()=> {
 

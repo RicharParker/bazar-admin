@@ -59,25 +59,16 @@ export const deleteProduct = async (id, dispatch) => {
   }
 };
 
-export const updateProduct = async (id, product, dispatch) => {
-  console.log('Updating product with ID:', id);
-  console.log('Product data:', product);
-  
-  dispatch(updateProductStart());
+export const updateProduct = async (id, updatedData, dispatch) => {
   try {
-    const response = await userRequest.put(`/products/${id}`, product);
-    console.log('Response:', response); // Add this line to log the response object
-    const updatedProduct = response.data;
-    console.log('Updated product data:', updatedProduct);
-    
-    dispatch(updateProductSuccess({ id, product: updatedProduct }));
-    return { success: true, product: updatedProduct };
+    const res = await userRequest.put(`products/${id}`, updatedData);
+    dispatch(updateProductSuccess({ id, product: res.data }));
+    return { success: true, data: res.data };
   } catch (err) {
-    dispatch(updateProductFailure(err.message));
-    return { success: false, error: err.message };
+    console.error("Update product error:", err);
+    return { success: false, message: err.message };
   }
 };
-
 
 
 
