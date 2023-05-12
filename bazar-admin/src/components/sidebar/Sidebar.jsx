@@ -16,10 +16,10 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/" className="link">
-            <li className="sidebarListItem">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
           </ul>
         </div>
@@ -38,14 +38,12 @@ export default function Sidebar() {
                 Productos
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transacciones
-            </li>
-            <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Ordenes
-            </li>
+            <Link to="/orders" className="link">
+              <li className="sidebarListItem">
+                <BarChart className="sidebarIcon" />
+                Ordenes
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

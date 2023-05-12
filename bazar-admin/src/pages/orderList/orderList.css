@@ -1,4 +1,4 @@
-.productList{
+.orderList{
     flex: 4;
 }
 
@@ -8,12 +8,12 @@
     font-size: 14px;
 }
 
-.productListItem{
+.orderListItem{
     display: flex;
     align-items: center;
 }
 
-.productListImg {
+.orderListImg {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -21,7 +21,7 @@
     margin-right: 10px;
   }
 
-.productListEdit{
+.orderListEdit{
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
@@ -31,7 +31,7 @@
     margin-right: 20px;
 }
 
-.productListDownload{
+.orderListDownload{
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
@@ -41,7 +41,7 @@
     margin-right: 20px;
 }
 
-.productListDelete{
+.orderListDelete{
     color: red;
     cursor: pointer;
 }

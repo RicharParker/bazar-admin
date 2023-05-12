@@ -15,23 +15,22 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
+import OrderList from "./pages/orderList/orderList";
 import NotFound from "./pages/NotFound/NotFound";
 import { useSelector, useDispatch } from "react-redux";
 
 
 const App = ()=> {
 
-
-  const admin = useSelector((state) => state.user.currentUser.isAdmin);
-
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   return (
     <Router>
       <Switch>
         <Route path="/login">
-          <Login />
+          {currentUser ? <Redirect to="/" /> : <Login />}
         </Route>
-        {admin && (
+        {currentUser && currentUser.isAdmin && (
           <>
             <Topbar />
             <div className="container">
@@ -57,11 +56,14 @@ const App = ()=> {
               <Route path="/newproduct">
                 <NewProduct />
               </Route>
+              <Route path="/orders">
+                <OrderList />
+              </Route>
             </div>
           </>
         )}
         <Route path="*">
-          <NotFound />
+          {currentUser ? <Redirect to="/" /> : <NotFound />}
         </Route>
       </Switch>
     </Router>

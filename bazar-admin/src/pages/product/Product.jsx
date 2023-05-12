@@ -69,7 +69,7 @@ export default function Product() {
     } else {
       toast.error("No se pudo actualizar el producto");
     }
-    
+
   };
 
 
@@ -166,10 +166,11 @@ export default function Product() {
               <label>Categorias</label>
               <input type="text" placeholder={product.categories} onChange={handleCat} />
               <label>In Stock</label>
-              <select name="inStock" onChange={handleChange} >
+              <select name="inStock" onChange={handleChange} value={inputs.inStock}>
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
+
             </div>
             <div className="productFormRight">
               <div className="productUpload">

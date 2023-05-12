@@ -1,54 +1,80 @@
+import { useState } from "react";
+import app from "../../firebase";
+import { addUser } from "../../redux/apiCalls";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import "./newUser.css";
 
 export default function NewUser() {
+  const [inputs, setInputs] = useState({});
+  const [file, setFile] = useState(null);
+  const [cat, setCat] = useState([]);
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const toastContainerStyle = {
+    fontSize: '1.5rem',
+    backgroundColor: '#333',
+    color: '#fff',
+    borderRadius: '10px',
+    padding: '1rem',
+  };
+
+  const handleChange = (e) => {
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+  const handleClick = async (e) => {
+
+    e.preventDefault();
+    const User = { ...inputs, categories: cat };
+   const success = addUser(User, dispatch);
+    if (success) {
+      toast.success("usuario agregado exitosamente");
+      history.push("/Users");
+    } else {
+      toast.error("usuario no agregado");
+    }
+  };
+
   return (
-    <div className="newUser">
-      <h1 className="newUserTitle">New User</h1>
-      <form className="newUserForm">
-        <div className="newUserItem">
-          <label>Username</label>
-          <input type="text" placeholder="john" />
-        </div>
-        <div className="newUserItem">
-          <label>Full Name</label>
-          <input type="text" placeholder="John Smith" />
-        </div>
-        <div className="newUserItem">
-          <label>Email</label>
-          <input type="email" placeholder="john@gmail.com" />
-        </div>
-        <div className="newUserItem">
-          <label>Password</label>
-          <input type="password" placeholder="password" />
-        </div>
-        <div className="newUserItem">
-          <label>Phone</label>
-          <input type="text" placeholder="+1 123 456 78" />
-        </div>
-        <div className="newUserItem">
-          <label>Address</label>
-          <input type="text" placeholder="New York | USA" />
-        </div>
-        <div className="newUserItem">
-          <label>Gender</label>
-          <div className="newUserGender">
-            <input type="radio" name="gender" id="male" value="male" />
-            <label for="male">Male</label>
-            <input type="radio" name="gender" id="female" value="female" />
-            <label for="female">Female</label>
-            <input type="radio" name="gender" id="other" value="other" />
-            <label for="other">Other</label>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        closeOnClick={false}
+        pauseOnHover={false}
+        toastContainerStyle={toastContainerStyle}
+
+      />
+
+      <div className="newUser">
+        <h1 className="newUserTitle">Nuevo usuario</h1>
+        <form className="newUserForm">
+          <div className="newUserItem">
+            <label>Username</label>
+            <input type="text" placeholder="john" name="username" onChange={handleChange} />
+            <label>Email</label>
+            <input type="email" placeholder="john@gmail.com"name="email" onChange={handleChange} />
+            <label>Password</label>
+            <input type="password" placeholder="password" name="password" className="selection1" onChange={handleChange} />
+            <label>Password</label>
+            <select name="isAdmin" onChange={handleChange}>
+              <option value="true">Si</option>
+              <option value="false">No</option>
+            </select>
+            <button className="newUserButton" onClick={handleClick} >Crear Usuario</button>
           </div>
-        </div>
-        <div className="newUserItem">
-          <label>Active</label>
-          <select className="newUserSelect" name="active" id="active">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-        <button className="newUserButton">Create</button>
-      </form>
-    </div>
+        </form>
+      </div>
+
+    </>
+
   );
 }

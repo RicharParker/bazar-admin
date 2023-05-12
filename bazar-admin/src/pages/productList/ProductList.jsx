@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../redux/apiCalls";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { FaFilePdf } from 'react-icons/fa';
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ export default function ProductList() {
       confirmButtonText: "¡Sí, eliminar!",
       cancelButtonText: "Cancelar",
     });
-  
+
     if (result.isConfirmed) {
       const response = await deleteProduct(id, dispatch);
       if (response.success !== undefined) {
@@ -55,10 +58,28 @@ export default function ProductList() {
       }
     }
   };
-  
+
+
+  const handleDownloadPDF = (params) => {
+    const product = products.find((p) => p._id === params.row._id);
+    const doc = new jsPDF();
+    doc.setProperties({
+      title: `Informe de ${product.title}`,
+      author: 'Mi tienda',
+    });
+    doc.setFontSize(12);
+    doc.text(`Detalles del producto: ${product.title}`, 20, 20);
+    doc.autoTable({
+      startY: 30,
+      head: [['ID', 'Producto', 'Stock', 'Precio']],
+      body: [[product._id, product.title, product.inStock, product.price]],
+    });
+    doc.save(`Informe de ${product.title}.pdf`);
+  };
+
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 220 },
+    //{ field: "_id", headerName: "ID", width: 220 },
     {
       field: "product",
       headerName: "Producto",
@@ -77,6 +98,18 @@ export default function ProductList() {
       field: "price",
       headerName: "Precio",
       width: 160,
+    },
+    {
+      field: "Pdf",
+      headerName: "Descargar PDF",
+      width: 180,
+      renderCell: (params) => {
+        return (
+          <button className="productListDownload" onClick={() => handleDownloadPDF(params)}>
+             Descargar <FaFilePdf />
+          </button>
+        );
+      }
     },
     {
       field: "action",

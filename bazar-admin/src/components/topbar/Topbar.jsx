@@ -1,8 +1,8 @@
 import React from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings, ExitToApp } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/apiCalls";
+import { useDispatch} from "react-redux";
+import { logout } from "../../redux/user/userActions"
 import { useHistory } from "react-router";
 
 export default function Topbar() {
@@ -13,6 +13,7 @@ export default function Topbar() {
     dispatch(logout());
     history.push("/login");
   };
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
