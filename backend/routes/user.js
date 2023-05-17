@@ -105,4 +105,29 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+router.post("/insertAdmin", async (req, res) => {
+  try {
+    const existingUser = await User.findOne({ username: "admin" });
+    if (existingUser) {
+      return res.status(400).json({ message: "Default admin user already exists" });
+    }
+
+    const newUser = new User({
+      username: "admin",
+      email:"prueba1@gmail.com",
+      password: CryptoJS.AES.encrypt(
+        "123",
+        process.env.PASS_SEC
+      ).toString(),
+      isAdmin: true,
+    });
+
+    const savedUser = await newUser.save();
+    res.status(200).json(savedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;

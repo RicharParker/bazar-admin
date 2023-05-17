@@ -1,13 +1,9 @@
 import "./orderList.css";
-import { Grid } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteOrder, getOrders } from "../../redux/apiCalls";
-import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { FaFilePdf } from 'react-icons/fa';
@@ -15,7 +11,6 @@ import { FaFilePdf } from 'react-icons/fa';
 export default function OrderList() {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders || []);
-  const history = useHistory();
 
   useEffect(() => {
     getOrders(dispatch);
