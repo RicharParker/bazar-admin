@@ -33,8 +33,8 @@ export default function OrderList() {
     doc.text(`Detalles del ordero: ${order.userId}`, 20, 20);
     doc.autoTable({
       startY: 30,
-      head: [['ID', 'Orden', 'Cantidad']],
-      body: [[order._id, order.userId, order.amount]],
+      head: [['ID', 'Orden', 'Cantidad', 'Estatus']],
+      body: [[order._id, order.userId, order.amount,order.status]],
     });
     doc.save(`Informe de ${order.userId}.pdf`);
   };
@@ -44,10 +44,11 @@ export default function OrderList() {
     { field: "_id", headerName: "ID", width: 220 },
     {
       field: "userId",
-      headerName: "Orden",
+      headerName: "Nombre",
       width: 200,
     },
     { field: "amount", headerName: "Cantidad", width: 200 },
+    { field: "status", headerName: "Estatus", width: 200 },  
     {
       field: "Pdf",
       headerName: "Descargar PDF",
@@ -67,9 +68,6 @@ export default function OrderList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/order/" + params.row._id}>
-              <button className="orderListEdit">Editar</button>
-            </Link>
             <DeleteOutline
               className="orderListDelete"
             />

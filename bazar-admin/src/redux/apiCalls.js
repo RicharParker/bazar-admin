@@ -16,10 +16,7 @@ import {
 } from "./userRedux";
 
 import {
-  getOrderFailure, getOrderStart, getOrderSuccess, deleteOrderFailure, deleteOrderStart, deleteOrderSuccess, updateOrderFailure, updateOrderStart, updateOrderSuccess,
-  addOrderFailure,
-  addOrderStart,
-  addOrderSuccess,
+  getOrderFailure, getOrderStart, getOrderSuccess,
 } from "./orderRedux";
 
 
