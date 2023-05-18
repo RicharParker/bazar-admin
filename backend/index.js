@@ -59,7 +59,7 @@ const createDefaultAdmin = async () => {
     if (!existingUser) {
       const newUser = new User({
         username: "admin",
-        email:"admin@gmail.com",
+        email: "admin@gmail.com",
         password: CryptoJS.AES.encrypt(
           "123",
           process.env.PASS_SEC
@@ -77,8 +77,10 @@ const createDefaultAdmin = async () => {
 
 const startServer = async () => {
   try {
-    await connect();
-    await createDefaultAdmin();
+    const connectPromise = connect();
+    const createDefaultAdminPromise = createDefaultAdmin();
+
+    await Promise.all([connectPromise, createDefaultAdminPromise]);
 
     app.listen(5000, () => {
       console.log("Conectado al backend en el puerto 5000.");
