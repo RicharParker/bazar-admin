@@ -64,7 +64,7 @@ export default function NewUser() {
             <input type="email" placeholder="john@gmail.com"name="email" onChange={handleChange} />
             <label>Password</label>
             <input type="password" placeholder="password" name="password" className="selection1" onChange={handleChange} />
-            <label>Password</label>
+            <label>Administrador</label>
             <select name="isAdmin" onChange={handleChange}>
               <option value="true">Si</option>
               <option value="false">No</option>

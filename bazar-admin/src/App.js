@@ -24,6 +24,7 @@ const App = () => {
         </Route>
         <>
           <Topbar />
+
           <div className="container">
             <Sidebar />
             <Route exact path="/">
@@ -50,6 +51,9 @@ const App = () => {
             <Route path="/orders">
               <OrderList />
             </Route>
+            <Route path="/login">
+          <Login />
+        </Route>
           </div>
         </>
 
